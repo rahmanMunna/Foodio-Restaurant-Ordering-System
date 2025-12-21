@@ -1,0 +1,17 @@
+/* eslint-disable prettier/prettier */
+
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { FoodEntity } from "./entities/food.entity";
+import { CategoryEntity } from "./entities/category.entity";
+import { FoodService } from "./services/food.service";
+import { FoodController } from "./controllers/food.controller";
+
+@Module({
+    imports: [TypeOrmModule.forFeature([FoodEntity, CategoryEntity])],
+    providers: [FoodService],
+    controllers: [FoodController]
+})
+export class FoodModule {
+
+}

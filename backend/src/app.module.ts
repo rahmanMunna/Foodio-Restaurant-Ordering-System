@@ -1,10 +1,23 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FoodModule } from './foods/food.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [FoodModule,
+    TypeOrmModule.forRoot(
+      {
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '5850',
+        database: 'foodio',
+        autoLoadEntities: true,
+        synchronize: true
+      }
+    )],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }
