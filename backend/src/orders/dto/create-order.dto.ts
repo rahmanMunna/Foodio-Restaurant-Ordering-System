@@ -2,7 +2,6 @@
 
 export class OrderItemDTO {
     foodId: number;
-    price: number;
     qty: number;
 }
 

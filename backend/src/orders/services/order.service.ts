@@ -7,6 +7,7 @@ import { OrderDetailsEntity } from "../entities/order-details.entity";
 import { OrderItemDTO, PlaceOrderDTO } from "../dto/create-order.dto";
 import { CustomerEntity } from "src/users/entities/customer.entity";
 import { FoodEntity } from "src/foods/entities/food.entity";
+import { OrderStatusEntity } from "../entities/order-status.entity";
 
 @Injectable()
 export class OrderService {
@@ -14,9 +15,17 @@ export class OrderService {
         @InjectRepository(OrderEntity) private readonly orderRepo: Repository<OrderEntity>,
         @InjectRepository(CustomerEntity) private readonly customerRepo: Repository<CustomerEntity>,
         @InjectRepository(FoodEntity) private readonly foodRepo: Repository<FoodEntity>,
+        @InjectRepository(OrderStatusEntity) private readonly orderStatusRepo: Repository<OrderStatusEntity>,
         @InjectRepository(OrderDetailsEntity) private readonly orderDetailsRepo: Repository<OrderDetailsEntity>) { }
 
 
+    async getOrderById(oId: number): Promise<OrderEntity> {
+        const order: OrderEntity | null = await this.orderRepo.findOneBy({ id: oId });
+        if (!order) {
+            throw new NotFoundException(`${oId} is not existing order`);
+        }
+        return order;
+    }
     async placeOrder(dto: PlaceOrderDTO): Promise<OrderEntity> {
         const customer: CustomerEntity = await this.getCustomerById(dto.customerId);
         const orderedFoods: FoodEntity[] = await this.getAllFoodById(dto.orderItems);
@@ -37,9 +46,6 @@ export class OrderService {
         const orderCreated = await this.orderRepo.save(orderPlaced);
         await this.createOrderDetails(orderCreated, dto.orderItems, orderedFoods);
         return orderCreated;
-
-
-
     }
     async getCustomerById(cId: number): Promise<CustomerEntity> {
         const customer: CustomerEntity | null = await this.customerRepo.findOneBy({ id: cId });
@@ -72,7 +78,6 @@ export class OrderService {
         }
         return total;
     }
-
     // Order details
     async createOrderDetails(order: OrderEntity, orderItems: OrderItemDTO[], foods: FoodEntity[]): Promise<OrderDetailsEntity[]> {
         const orderDetails: OrderDetailsEntity[] = [];
@@ -93,6 +98,48 @@ export class OrderService {
         return await this.orderDetailsRepo.save(orderDetails);
     }
 
+    // change order status
+    async getOrderStatusById(id: number): Promise<OrderStatusEntity> {
+        const ors = await this.orderStatusRepo.findOneBy({ id: id })
+        if (!ors) {
+            throw new NotFoundException(`${id} is not existing order`);
+        }
+        return ors;
+    }
+    async prepareOrder(oId: number): Promise<boolean> {
+        const order: OrderEntity | null = await this.getOrderById(oId)
+        const status: OrderStatusEntity = await this.getOrderStatusById(2); // 2 for preparing
+
+        await this.orderRepo.update(
+            { id: oId },
+            { orderStatus: status },
+        );
+
+        return true;
+    }
+    async readyOrder(oId: number): Promise<boolean> {
+        const order: OrderEntity | null = await this.getOrderById(oId)
+
+        const status: OrderStatusEntity = await this.getOrderStatusById(3); // 2 for ready
+
+        await this.orderRepo.update(
+            { id: oId },
+            { orderStatus: status },
+        );
+
+        return true;
+    }
+    async completeOrder(oId: number): Promise<boolean> {
+        const order: OrderEntity | null = await this.getOrderById(oId)
+        const status: OrderStatusEntity = await this.getOrderStatusById(4); // 2 for ready
+
+        await this.orderRepo.update(
+            { id: oId },
+            { orderStatus: status },
+        );
+
+        return true;
+    }
 
 
 }
