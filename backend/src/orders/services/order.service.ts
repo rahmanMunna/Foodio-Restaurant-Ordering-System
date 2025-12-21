@@ -97,6 +97,31 @@ export class OrderService {
         }
         return await this.orderDetailsRepo.save(orderDetails);
     }
+    // 
+    async getOrderByCustomerId(cId: number): Promise<OrderEntity[]> {
+        const order: OrderEntity[] | null = await this.orderRepo.find({
+            where: {
+                customer: {
+                    id: cId,
+                }
+            },
+            relations:
+                [
+                    'orderStatus',
+                    'orderDetails',
+                    'orderDetails.food'
+                ],
+            order: {
+                date: 'DESC'
+            }
+
+
+        })
+        if (!order) {
+            throw new NotFoundException(`No orders found for customer ${cId}`);
+        }
+        return order;
+    }
 
     // change order status
     async getOrderStatusById(id: number): Promise<OrderStatusEntity> {

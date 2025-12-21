@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Param, ParseIntPipe, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
 import { OrderService } from "../services/order.service";
 import { PlaceOrderDTO } from "../dto/create-order.dto";
 import { OrderEntity } from "../entities/order.entity";
@@ -24,5 +24,9 @@ export class OrderController {
     @Patch('complete/:oId')
     async CompleteOrder(@Param('oId', ParseIntPipe) oId: number): Promise<boolean> {
         return this.orderService.completeOrder(oId);
+    }
+    @Get('customer/:cId')
+    async getOrderByCustomerId(@Param('cId', ParseIntPipe) cId: number): Promise<OrderEntity[]> {
+        return this.orderService.getOrderByCustomerId(cId)
     }
 }
