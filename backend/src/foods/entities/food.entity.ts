@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CategoryEntity } from "./category.entity";
+import { OrderDetailsEntity } from "src/orders/entities/order-details.entity";
 
 
 @Entity('foods')
@@ -28,5 +29,7 @@ export class FoodEntity {
     @JoinColumn({ name: 'category_id' })
     category: CategoryEntity;
 
+    @OneToMany(() => OrderDetailsEntity, orderDetails => orderDetails.food)
+    orderDetails: OrderDetailsEntity[];
 
 }

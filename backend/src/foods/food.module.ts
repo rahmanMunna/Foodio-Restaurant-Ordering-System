@@ -12,6 +12,4 @@ import { FoodController } from "./controllers/food.controller";
     providers: [FoodService],
     controllers: [FoodController]
 })
-export class FoodModule {
-
-}
+export class FoodModule {}
