@@ -14,6 +14,9 @@ export class UserEntity {
     @Column({ type: 'varchar', length: 50 })
     password: string;
 
+    @Column({ type: 'varchar', length: 50, nullable: false })
+    role: string;
+
     @OneToOne(() => CustomerEntity, customer => customer.user)
     customer: CustomerEntity;
 }
