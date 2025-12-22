@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from "@nestjs/common";
 import { OrderService } from "../services/order.service";
 import { PlaceOrderDTO } from "../dto/create-order.dto";
 import { OrderEntity } from "../entities/order.entity";
@@ -10,9 +10,9 @@ import { AdminGuard } from "src/auth/guards/admin.guard";
 export class OrderController {
     constructor(private readonly orderService: OrderService) { }
 
-    @UseGuards(CustomerGuard)
+    // @UseGuards(CustomerGuard)
     @Post('place')
-    async placeOrder(@Body() dto: PlaceOrderDTO): Promise<OrderEntity> {
+    async placeOrder(@Req() req, @Body() dto: PlaceOrderDTO): Promise<OrderEntity> {
         return this.orderService.placeOrder(dto);
     }
 

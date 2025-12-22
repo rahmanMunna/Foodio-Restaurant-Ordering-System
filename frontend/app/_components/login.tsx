@@ -22,6 +22,12 @@ export default function Login() {
     async function signIn(payload: LoginPayload) {
         const res = await AuthService.signIn(payload);
         console.log(res);
+        // if (!res.data) {
+        //     throw new Error('wrong')
+        // }
+        localStorage.setItem('role', res.role)
+        localStorage.setItem('cId', res.customerId)
+        localStorage.setItem('token', res.access_token)
     }
 
 

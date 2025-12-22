@@ -2,26 +2,43 @@
 
 import { useState } from "react";
 import { Food } from "../_types/Food";
-import { OrderItems } from "../_types/OrderItems";
+import { OrderItems, PlaceOrder } from "../_types/OrderItems";
+import { useRouter } from "next/navigation";
+import { OrderService } from "../_services/order.service";
 
 type FoodCardProps = {
     food: Food;
 };
 export default function Modal({ food }: FoodCardProps) {
-    const [qty, setQty] = useState<number>(0)
-    function handleConfirm(fId: number) {
+    const [qty, setQty] = useState<number>(0);
+    const router = useRouter();
+    async function handleConfirm(fId: number) {
         if (qty === 0) {
             alert("please Select 1 items")
             return;
         }
-        const orderItems: OrderItems[] = [
-            {
-                foodId: fId,
-                qty: qty
-            }
-        ]
+        const cIdStr = localStorage.getItem("cId");
 
-        console.log(orderItems)
+        if (!cIdStr) {
+            router.push("/login");
+            return;
+        }
+
+        const cId = Number(cIdStr); // convert to number
+
+        const orderItems: PlaceOrder = {
+            customerId: cId,
+            orderItems: [
+                {
+                    foodId: fId,
+                    qty: qty
+                }
+            ],
+        };
+
+        const res = await OrderService.placeOrder(orderItems)
+
+        console.log(res)
 
 
     }
