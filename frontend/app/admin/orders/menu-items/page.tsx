@@ -5,7 +5,7 @@ export default async function MenuItems() {
     // console.log(foods)
     return (
         <div className="overflow-x-auto">
-            <h1 className="p-2 border-b-2 mb-2 ml-2 text-2xl">Menu Items</h1>
+            <h1 className="p-2 border-b-2 mb-2 ml-2 font-bold text-2xl">Menu Items</h1>
             <table className="table w-full border-collapse rounded-lg shadow-md bg-white">
                 {/* head */}
                 <thead>

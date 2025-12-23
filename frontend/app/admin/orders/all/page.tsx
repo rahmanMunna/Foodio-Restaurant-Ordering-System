@@ -9,7 +9,7 @@ export default async function AllOrders() {
 
     return (
         <div className="">
-            <h1 className="p-2 border-b-2 mb-4 ml-2 text-2xl font-bold text-gray-700">
+            <h1 className="p-2 border-b-2 mb-4 ml-2 text-2xl font-bold">
                 Orders Items
             </h1>
 
@@ -35,11 +35,11 @@ export default async function AllOrders() {
                             >
                                 <td className="px-4 py-2 font-medium text-gray-800">{o.id}</td>
                                 <td className="px-4 py-2 text-gray-600">
-                                    {new Date(o.date).toLocaleString()}
+                                    {new Date(o.date).toDateString()}
                                 </td>
                                 <td className="px-4 py-2">{o.customer.fullName}</td>
                                 <td className="px-4 py-2 text-green-600 font-semibold">
-                                    ${o.total}
+                                    Tk {o.total}
                                 </td>
 
                                 <td className="px-4 py-2">
