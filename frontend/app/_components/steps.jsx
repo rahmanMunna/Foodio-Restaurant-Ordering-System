@@ -11,7 +11,7 @@ export default function Steps({ orderStatus }) {
 
             <li className={`step ${orderStatus.id >= 3 ? 'step-primary' : ''}`}>
                 Ready
-            </li>
+            </li>      
 
             <li className={`step ${orderStatus.id >= 4 ? 'step-primary' : ''}`}>
                 Completed

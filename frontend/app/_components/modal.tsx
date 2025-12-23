@@ -5,6 +5,8 @@ import { Food } from "../_types/Food";
 import { OrderItems, PlaceOrder } from "../_types/OrderItems";
 import { useRouter } from "next/navigation";
 import { OrderService } from "../_services/order.service";
+import toast from 'react-hot-toast';
+
 
 type FoodCardProps = {
     food: Food;
@@ -37,6 +39,7 @@ export default function Modal({ food }: FoodCardProps) {
         };
 
         const res = await OrderService.placeOrder(orderItems)
+        toast.success("Order placed successfully 🎉");
 
         console.log(res)
 
