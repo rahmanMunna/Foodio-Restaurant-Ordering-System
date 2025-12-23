@@ -5,6 +5,7 @@ import { PlaceOrderDTO } from "../dto/create-order.dto";
 import { OrderEntity } from "../entities/order.entity";
 import { CustomerGuard } from "src/auth/guards/customer.guard";
 import { AdminGuard } from "src/auth/guards/admin.guard";
+import { OrderStatusEntity } from "../entities/order-status.entity";
 
 @Controller('order')
 export class OrderController {
@@ -16,19 +17,20 @@ export class OrderController {
         return this.orderService.placeOrder(dto);
     }
 
-    @UseGuards(AdminGuard)
+    // @UseGuards(AdminGuard)
     @Patch('preparing/:oId')
     async prepareOrder(@Param('oId', ParseIntPipe) oId: number): Promise<boolean> {
+        console.log(oId)
         return this.orderService.prepareOrder(oId);
     }
 
-    @UseGuards(AdminGuard)
+    // @UseGuards(AdminGuard)
     @Patch('ready/:oId')
     async readyOrder(@Param('oId', ParseIntPipe) oId: number): Promise<boolean> {
         return this.orderService.readyOrder(oId);
     }
 
-    @UseGuards(AdminGuard)
+    // @UseGuards(AdminGuard)
     @Patch('complete/:oId')
     async CompleteOrder(@Param('oId', ParseIntPipe) oId: number): Promise<boolean> {
         return this.orderService.completeOrder(oId);
@@ -41,8 +43,13 @@ export class OrderController {
     }
 
     @Get('all')
-    async getAllOrders() : Promise<OrderEntity[]>{
+    async getAllOrders(): Promise<OrderEntity[]> {
         return this.orderService.getAllOrders();
+    }
+
+    @Get('all-status')
+    async getAllOrderStatus(): Promise<OrderStatusEntity[]> {
+        return this.orderService.getAllOrderStatus();
     }
 
 }

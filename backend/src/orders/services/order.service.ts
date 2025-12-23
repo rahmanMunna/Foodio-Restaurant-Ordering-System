@@ -174,5 +174,8 @@ export class OrderService {
         });
     }
 
+    async getAllOrderStatus(): Promise<OrderStatusEntity[]> {
+        return await this.orderStatusRepo.find();
+    }
 
 }
