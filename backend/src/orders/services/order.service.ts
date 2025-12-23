@@ -108,6 +108,7 @@ export class OrderService {
             relations:
                 [
                     'orderStatus',
+                    'customer',
                     'orderDetails',
                     'orderDetails.food'
                 ],
@@ -164,6 +165,13 @@ export class OrderService {
         );
 
         return true;
+    }
+
+    // admin
+    async getAllOrders(): Promise<OrderEntity[]> {
+        return await this.orderRepo.find({
+            relations: ['orderStatus', 'customer']
+        });
     }
 
 

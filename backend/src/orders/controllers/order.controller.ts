@@ -34,9 +34,15 @@ export class OrderController {
         return this.orderService.completeOrder(oId);
     }
 
-    @UseGuards(CustomerGuard)
+    // @UseGuards(CustomerGuard)
     @Get('customer/:cId')
     async getOrderByCustomerId(@Param('cId', ParseIntPipe) cId: number): Promise<OrderEntity[]> {
         return this.orderService.getOrderByCustomerId(cId)
     }
+
+    @Get('all')
+    async getAllOrders() : Promise<OrderEntity[]>{
+        return this.orderService.getAllOrders();
+    }
+
 }
