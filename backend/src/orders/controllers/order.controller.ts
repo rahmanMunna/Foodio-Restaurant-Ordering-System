@@ -1,19 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from "@nestjs/common";
 import { OrderService } from "../services/order.service";
 import { PlaceOrderDTO } from "../dto/create-order.dto";
 import { OrderEntity } from "../entities/order.entity";
-import { CustomerGuard } from "src/auth/guards/customer.guard";
-import { AdminGuard } from "src/auth/guards/admin.guard";
 import { OrderStatusEntity } from "../entities/order-status.entity";
+import Request from "express";
+import { CustomerGuard } from "src/auth/guards/customer.guard";
 
 @Controller('order')
 export class OrderController {
     constructor(private readonly orderService: OrderService) { }
 
-    // @UseGuards(CustomerGuard)
+    @UseGuards(CustomerGuard)
     @Post('place')
     async placeOrder(@Req() req, @Body() dto: PlaceOrderDTO): Promise<OrderEntity> {
+        const cookie = req.cookies['jwt'];
+        const cId: number = await this.orderService.user(cookie);
+        dto.customerId = cId
+        console.log(dto)
         return this.orderService.placeOrder(dto);
     }
 
@@ -51,5 +57,6 @@ export class OrderController {
     async getAllOrderStatus(): Promise<OrderStatusEntity[]> {
         return this.orderService.getAllOrderStatus();
     }
+
 
 }

@@ -8,10 +8,19 @@ import { OrderItemDTO, PlaceOrderDTO } from "../dto/create-order.dto";
 import { CustomerEntity } from "src/users/entities/customer.entity";
 import { FoodEntity } from "src/foods/entities/food.entity";
 import { OrderStatusEntity } from "../entities/order-status.entity";
+import { JwtService } from "@nestjs/jwt";
+
+export interface JwtPayload {
+    sub: number;
+    role: 'admin' | 'customer';
+    iat: number;
+    exp: number;
+}
 
 @Injectable()
 export class OrderService {
     constructor(
+        private jwtService: JwtService,
         @InjectRepository(OrderEntity) private readonly orderRepo: Repository<OrderEntity>,
         @InjectRepository(CustomerEntity) private readonly customerRepo: Repository<CustomerEntity>,
         @InjectRepository(FoodEntity) private readonly foodRepo: Repository<FoodEntity>,
@@ -176,6 +185,26 @@ export class OrderService {
 
     async getAllOrderStatus(): Promise<OrderStatusEntity[]> {
         return await this.orderStatusRepo.find();
+    }
+    async user(cookie: string): Promise<number> {
+        // Decode JWT
+        const data: JwtPayload = await this.jwtService.verifyAsync(cookie);
+
+        // Find customer by user ID
+        const customer = await this.customerRepo.findOne({
+            where: {
+                user: { id: data.sub },
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (!customer) {
+            throw new Error('Customer not found');
+        }
+
+        return customer.id;
     }
 
 }

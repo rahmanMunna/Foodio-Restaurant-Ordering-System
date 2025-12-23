@@ -5,40 +5,36 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
-import { AuthPayload } from "../dto/auth-payload.dto";
+
+export interface JwtPayload {
+    sub: number;
+    role: 'admin' | 'customer';
+    iat: number;
+    exp: number;
+}
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-    constructor(private jwtService: JwtService) { }
+    constructor(private jwtService: JwtService) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: Request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
-        console.log(token);
 
+        const token = request.cookies['jwt'];
         if (!token) {
-            throw new UnauthorizedException("Token nei");
+            throw new UnauthorizedException('No JWT token found');
         }
+
         try {
-            const payload: AuthPayload = await this.jwtService.verifyAsync(
-                token,
-                {
-                    secret: process.env.JWT_SECRET || 'secretkey'
-                }
-            );
-            request['user'] = payload;
-            if (payload?.role !== 'admin') {
-                throw new UnauthorizedException("customer access only !!")
+            const data: JwtPayload = await this.jwtService.verifyAsync(token);
+
+            if (data.role === 'admin') {
+                return true; // allow access
+            } else {
+                throw new UnauthorizedException('Not an admin');
             }
-        } catch {
-            throw new UnauthorizedException("Invalid login unauthorized");
+        } catch (err) {
+            throw new UnauthorizedException('Invalid token');
         }
-        return true;
-    }
-
-
-    private extractTokenFromHeader(request: Request): string | undefined {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'Bearer' ? token : undefined;
     }
 }
