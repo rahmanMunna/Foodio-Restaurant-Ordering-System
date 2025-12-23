@@ -1,5 +1,5 @@
-import MyOrdersCard from "../_components/my-order-card";
-import { OrderService } from "../_services/order.service"
+import MyOrdersCard from "@/app/_components/my-order-card";
+import { OrderService } from "@/app/_services/order.service";
 
 export default async function MyOrders() {
   const myOrders = await OrderService.getAllOrderByCustomerId(1);

@@ -8,8 +8,8 @@ export default function Navbar() {
 
   const routes = [
     { name: "Home", href: "/" },
-    { name: "Food Menu", href: "/menu" },
-    { name: "My Orders", href: "/my_orders" },
+    { name: "Food Menu", href: "/customer/menu" },
+    { name: "My Orders", href: "/customer/my_orders" },
   ];
 
   return (

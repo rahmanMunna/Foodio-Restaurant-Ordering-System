@@ -1,7 +1,7 @@
 'use client'
-
+import { OrderService } from "@/app/_services/order.service";
 import { useEffect, useState } from "react";
-import { OrderService } from "../_services/order.service"
+
 
 export type Food = {
     id: number;
@@ -39,7 +39,7 @@ export default function OrderDetailsModal({ total, customer, orderId }) {
     }, [orderId]);
     return (
         <>
-            <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
+            <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle  text-start">
                 {
                     loading && <h1>Loading</h1>
                 }

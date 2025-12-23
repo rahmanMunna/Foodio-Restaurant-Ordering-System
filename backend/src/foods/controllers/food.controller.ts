@@ -36,4 +36,6 @@ export class FoodController {
     async getAllFoodByCategory(@Param('cId', ParseIntPipe) cId: number): Promise<FoodEntity[]> {
         return this.foodService.getAllFoodByCategory(cId);
     }
+
+    
 }

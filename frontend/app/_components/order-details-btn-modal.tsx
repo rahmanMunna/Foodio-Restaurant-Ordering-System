@@ -1,6 +1,7 @@
 'use client'
 
-import OrderDetailsModal from "../orders/order-details-modal"
+import OrderDetailsModal from "../admin/orders/order-details-modal"
+
 
 export default function OrderDetailBtnModal({ o }) {
     return (

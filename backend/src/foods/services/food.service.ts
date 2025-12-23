@@ -45,7 +45,9 @@ export class FoodService {
     }
 
     async getAllFood(): Promise<FoodEntity[]> {
-        return await this.foodRepo.find();
+        return await this.foodRepo.find({
+            relations: ['category']
+        });
     }
 
     async getAllFoodByCategory(cId: number): Promise<FoodEntity[]> {

@@ -1,6 +1,7 @@
-import FoodCards from "../_components/food-cards"
-import { CategoryService } from "../_services/category.service"
-import { Category } from "../_types/category"
+import FoodCards from "@/app/_components/food-cards"
+import { CategoryService } from "@/app/_services/category.service"
+import { Category } from "@/app/_types/category"
+
 
 export default async function Menu() {
     const categories: Category[] = await CategoryService.getAll()
