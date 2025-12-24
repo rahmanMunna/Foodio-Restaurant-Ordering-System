@@ -15,9 +15,9 @@
 
 ### Project Structure
 Foodio-Restaurant-Ordering-System/
-│
-├── frontend/   # Next.js application
-└── backend/    # NestJS application
+- │
+- ├── frontend/   # Next.js application
+- └── backend/    # NestJS application
 
 ## 1. Backend Setup & Run (NestJS):
 ```
