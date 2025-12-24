@@ -12,4 +12,10 @@ export class CategoryService {
     async getAllCategory(): Promise<CategoryEntity[]> {
         return await this.categoryRepo.find();
     }
+
+    async add(category: string): Promise<CategoryEntity> {
+        const c = this.categoryRepo.create({ category : category });
+        return await this.categoryRepo.save(c);
+    }
+
 }

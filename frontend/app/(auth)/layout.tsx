@@ -13,7 +13,8 @@ export default function AuthLayout({
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col border-2">
                     <div className="text-center">
-                        <h1 className="text-5xl font-bold">Foodio</h1>
+                        <Link className="text-5xl font-bold" href={'/login'}>Foodio</Link>
+                        
                         <p className="py-6">
                             Premium flavors, delivered.
                         </p>

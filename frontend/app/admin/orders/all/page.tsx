@@ -3,6 +3,7 @@ import StatusSelect from "@/app/_components/status-selection";
 import OrderDetailBtnModal from "@/app/_components/order-details-btn-modal";
 
 
+
 export default async function AllOrders() {
     const orders = await OrderService.getAllOrder();
     const allStatus = await OrderService.getAllOrderStatus();
@@ -10,13 +11,13 @@ export default async function AllOrders() {
     return (
         <div className="">
             <h1 className="p-2 border-b-2 mb-4 ml-2 text-2xl font-bold">
-                Orders Items
+                Orders Management
             </h1>
 
             <div className="overflow-x-auto">
                 <table className="table-auto w-full border-collapse rounded-lg shadow-md bg-white">
                     <thead>
-                        <tr className="bg-amber-200 text-gray-700 text-center">
+                        <tr className="bg-white text-gray-700 text-center">
                             <th className="px-4 py-2">Order Id</th>
                             <th className="px-4 py-2">Date</th>
                             <th className="px-4 py-2">Customer</th>
@@ -42,7 +43,7 @@ export default async function AllOrders() {
                                     Tk {o.total}
                                 </td>
 
-                                <td className="px-4 py-2">
+                                <td className="px-4 py-2 ">
                                     {/* CSR controlled component */}
                                     <StatusSelect
                                         orderId={o.id}

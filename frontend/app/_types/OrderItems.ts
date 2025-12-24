@@ -4,6 +4,5 @@ export type OrderItems = {
 }
 
 export type PlaceOrder = {
-    customerId: number;
     orderItems: OrderItems[];
 }

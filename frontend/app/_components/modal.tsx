@@ -19,17 +19,7 @@ export default function Modal({ food }: FoodCardProps) {
             alert("please Select 1 items")
             return;
         }
-        const cIdStr = localStorage.getItem("cId");
-
-        if (!cIdStr) {
-            router.push("/login");
-            return;
-        }
-
-        const cId = Number(cIdStr); // convert to number
-
         const orderItems: PlaceOrder = {
-            customerId: cId,
             orderItems: [
                 {
                     foodId: fId,
@@ -38,11 +28,13 @@ export default function Modal({ food }: FoodCardProps) {
             ],
         };
 
-        const res = await OrderService.placeOrder(orderItems)
-        toast.success("Order placed successfully 🎉");
-
-        console.log(res)
-
+        try {
+            const res = await OrderService.placeOrder(orderItems)
+            toast.success("Order placed successfully 🎉");
+        }
+        catch(ex){
+            toast.error("You need to login");
+        }
 
     }
     function handleDecrement() {

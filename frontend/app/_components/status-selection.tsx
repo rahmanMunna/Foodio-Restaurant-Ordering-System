@@ -33,6 +33,7 @@ export default function StatusSelect({
 
     return (
         <select
+            className="border-2 rounded-xl p-2"
             value={statusId}
             onChange={handleChange}
 

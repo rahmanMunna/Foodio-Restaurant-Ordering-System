@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Navbar from "./navbar";
+import LogoutBtn from "../_components/logout-btn";
+import { AuthService } from "../_services/auth.service";
 
-
-export default function CustomerLayout() {
+export default async function CustomerLayout() {
     return (
-        <div className="navbar bg-amber-100">
+        <div className="navbar bg-white container mx-auto space-y-2">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -23,7 +24,7 @@ export default function CustomerLayout() {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link className="btn btn-primary" href={'/login'}>Login</Link>
+                <LogoutBtn></LogoutBtn>
             </div>
         </div>
     )

@@ -15,8 +15,8 @@ export const OrderService = {
         const res = await api.get(`/order-details/order/${oId}`);
         return res.data;
     },
-    async getAllOrderByCustomerId(cId: number) {
-        const res = await api.get(`order/customer/${cId}`);
+    async getAllOrderByCustomer() {
+        const res = await api.get(`/order/customer`);
         return res.data;
     },
     async getAllOrderStatus() {

@@ -8,6 +8,7 @@ export default function AdminLayout({
     return (
         <div className="">
             <CustomerLayout></CustomerLayout>
+
             <main className="col-span-2 p-4 container mx-auto">
                 {children}
             </main>

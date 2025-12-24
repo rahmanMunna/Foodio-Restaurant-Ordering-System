@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CategoryService } from "../services/category.service";
 import { CategoryEntity } from "../entities/category.entity";
 
@@ -11,5 +11,10 @@ export class CategoryController {
     @Get('all')
     async getAllCategory(): Promise<CategoryEntity[]> {
         return await this.categoryService.getAllCategory()
+    }
+
+    @Post('add')
+    async add(@Body('category') category: string): Promise<CategoryEntity> {
+        return await this.categoryService.add(category);
     }
 }

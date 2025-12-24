@@ -1,3 +1,4 @@
+import { ArchiveRestore, LogOut, Menu } from "@deemlol/next-icons";
 import Link from "next/link";
 
 export default function AdminLayout({
@@ -12,25 +13,34 @@ export default function AdminLayout({
                 <h1 className="text-center text-3xl font-bold text-amber-600 tracking-wide">
                     Foodio
                 </h1>
+                <div
+                    className="flex items-center justify-center gap-2 text-center border rounded-md p-2 text-lg font-medium bg-green-900 hover:bg-green-800 hover:shadow transition duration-200">
+                    <Menu size={24} color="#FFFFFF" />
+                    <Link
 
-                <Link
-                    className="text-center border rounded-md p-2 text-lg font-medium bg-amber-50 hover:bg-green-100 hover:shadow transition duration-200"
-                    href={"all"}
-                >
-                    Orders
-                </Link>
+                        href={"menu-items"}
+                    >
+                        Menu Items
+                    </Link>
+                </div>
+                <div className="flex items-center justify-center gap-2 text-center border rounded-md p-2 text-lg font-medium bg-green-900 hover:bg-green-800 hover:shadow transition duration-200">
+                    <ArchiveRestore size={24} color="#FFFFFF" />
+                    <Link
+                        href={"all"}
+                    >
+                        Orders
+                    </Link>
 
-                <Link
-                    className="text-center border rounded-md p-2 text-lg font-medium bg-amber-50 hover:bg-green-100 hover:shadow transition duration-200"
-                    href={"menu-items"}
-                >
-                    Menu Items
-                </Link>
-                <Link
-                    className="text-center border rounded-md p-2 text-lg font-medium bg-red-500 hover:bg-red-600 hover:shadow transition duration-200"
-                    href={'/login'}>
-                    Logout
-                </Link>
+                </div>
+
+                <div className="flex justify-center text-center border rounded-md p-2 text-lg font-medium bg-red-500 hover:bg-red-600 hover:shadow transition duration-200">
+                    <LogOut size={24} color="#FFFFFF" />
+                    <Link
+
+                        href={'/login'}>
+                        Logout
+                    </Link>
+                </div>
             </div>
 
             {/* Main content */}

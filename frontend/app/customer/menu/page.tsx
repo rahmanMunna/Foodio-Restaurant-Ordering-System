@@ -7,8 +7,9 @@ export default async function Menu() {
     const categories: Category[] = await CategoryService.getAll()
     return (
         <div className="space-y-6">
-            <div className="flex flex-col items-center">
-                <h1>Our Menu</h1>
+            <div className="flex text-green-950 flex-col items-center space-y-2">
+                <h1 className="text-6xl">Our Menu</h1>
+                
                 <p>Discover our selection of premium dishes, crafted with passion.</p>
             </div>
             <FoodCards categories={categories} ></FoodCards>

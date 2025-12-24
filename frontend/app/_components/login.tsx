@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { AuthService } from "../_services/auth.service";
 
 export default function Login() {
@@ -22,18 +22,14 @@ export default function Login() {
     };
 
     async function signIn(payload: LoginPayload) {
-        const res = await AuthService.signIn(payload);
-        console.log(res);
-        // if (!res.data) {
-        //     throw new Error('wrong')
-        // }
-        localStorage.setItem('role', res.role)
-        localStorage.setItem('cId', res.customerId)
-        localStorage.setItem('token', res.access_token)
-        if (res.role === 'admin') {
-            router.push('/admin/orders/all');
+        await AuthService.signIn(payload);
+        const user = await AuthService.user();
+        console.log(user);
+        if (user.role === 'admin') {
+            redirect('/admin/orders/all');
+
         }
-        else if (res.role === 'customer') {
+        else if (user.role === 'customer') {
             router.push('/customer/menu');
         }
     }
