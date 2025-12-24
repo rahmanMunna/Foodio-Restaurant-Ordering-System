@@ -17,7 +17,7 @@ export type OrderDetail = {
     food: Food;
 };
 
-export default function OrderDetailsModal({ total, customer, orderId }) {
+export default function OrderDetailsModal({ modalId, total, customer, orderId }: { modalId: string, total: number, customer: string, orderId: number }) {
     // const orderDetails = await OrderService.getOrderDetailByOrderId(orderId)
     const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]);
     const [loading, setLoading] = useState(true);
@@ -39,43 +39,54 @@ export default function OrderDetailsModal({ total, customer, orderId }) {
     }, [orderId]);
     return (
         <>
-            <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle  text-start">
-                {
-                    loading && <h1>Loading</h1>
-                }
-                {
-                    !loading && <div className="modal-box bg-white">
+            <dialog id={modalId} className="modal modal-bottom sm:modal-middle text-start">
+                {loading && (
+                    <div className="modal-box flex items-center justify-center">
+                        <h1 className="text-lg font-semibold animate-pulse">Loading...</h1>
+                    </div>
+                )}
 
-                    <div className="modal-action flex flex-col">
-                        <h1>Order Detail</h1>
-                        <p>{orderId}</p>
-                        <p>Address</p>
-                        <p>{customer}</p>
-                        <hr />
-                        <h1>Items</h1>
-                        {
-                            orderDetails.map((od) => {
-                                return (
-                                    <div className="flex justify-between" key={od.id}>
-                                        <p>{od.qty}x{od.food.name}</p>
-                                        <p>{od.orderPrice}</p>
+                {!loading && (
+                    <div className="modal-box bg-white rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold mb-2">Order Details</h2>
+                        <p className="text-sm text-gray-500 mb-4">Order ID: {orderId}</p>
+
+                        <div className="space-y-2 mb-4">
+                            <h3 className="font-semibold">Customer</h3>
+                            <p className="text-gray-700">{customer}</p>
+                        </div>
+
+                        <div className="border-t pt-4 mb-4">
+                            <h3 className="text-lg font-semibold mb-2">Items</h3>
+                            <div className="space-y-2">
+                                {orderDetails.map((od) => (
+                                    <div
+                                        className="flex justify-between text-gray-700"
+                                        key={od.id}
+                                    >
+                                        <p>
+                                            {od.qty} × <span className="font-medium">{od.food.name}</span>
+                                        </p>
+                                        <p className="font-semibold">{od.orderPrice}</p>
                                     </div>
-                                );
-                            })
-                        }
-                        <hr />
-                        <div className="flex justify-between">
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="border-t pt-4 mb-6 flex justify-between text-lg font-bold">
                             <p>Total</p>
                             <p>{total}</p>
                         </div>
 
-                        <form className="flex justify-end gap-3" method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
-                            <button className="btn">Cancel</button>
-                        </form>
+                        <div className="modal-action flex justify-end gap-3">
+                            <form method="dialog">
+                                <button className="btn btn-outline">Close</button>
+                            </form>
+                            
+                        </div>
                     </div>
-                </div>
-                }
-            </dialog></>
+                )}
+            </dialog>
+        </>
     )
 }

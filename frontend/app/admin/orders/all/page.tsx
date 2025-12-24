@@ -28,11 +28,12 @@ export default async function AllOrders() {
                     </thead>
 
                     <tbody className="text-center">
-                        {orders.map((o, idx) => (
+                        {orders.map(o => (
+                            
                             <tr
                                 key={o.id}
-                                className={`${idx % 2 === 0 ? "bg-gray-50" : "bg-white"
-                                    } hover:bg-amber-50 transition-colors duration-200 border-b`}
+                                className={`
+                                     hover:bg-amber-50 transition-colors duration-200 border-b`}
                             >
                                 <td className="px-4 py-2 font-medium text-gray-800">{o.id}</td>
                                 <td className="px-4 py-2 text-gray-600">

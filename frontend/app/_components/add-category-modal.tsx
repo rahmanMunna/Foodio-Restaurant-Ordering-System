@@ -1,5 +1,3 @@
-import api from '@/lib/axios';
-import React, { use, useState } from 'react'
 import { CategoryService } from '../_services/category.service';
 
 export default function AddCategoryModal() {
