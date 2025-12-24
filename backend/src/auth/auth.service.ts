@@ -5,6 +5,8 @@ import { JwtService } from "@nestjs/jwt";
 import { UserService } from "src/users/services/user.service";
 import { LoginDTO } from "./dto/login.dto";
 import { CustomerService } from "src/users/services/customer.service";
+import { RegisterCustomerDTO } from "./dto/register.dto";
+import { CustomerEntity } from "src/users/entities/customer.entity";
 
 @Injectable()
 export class AuthService {
@@ -35,11 +37,16 @@ export class AuthService {
 
         return token;
 
-        
+
     }
 
-    async user(cookie) : Promise<any> {
+    async user(cookie): Promise<any> {
         const data = this.jwtService.verifyAsync(cookie);
         return data;
+    }
+
+    async registerCustomer(dto: RegisterCustomerDTO): Promise<CustomerEntity> {
+        const customer = await this.usersService.createUser(dto);
+        return customer;
     }
 }

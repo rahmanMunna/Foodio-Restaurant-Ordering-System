@@ -107,11 +107,13 @@ export class OrderService {
         return await this.orderDetailsRepo.save(orderDetails);
     }
     // 
-    async getOrderByCustomerId(cId: number): Promise<OrderEntity[]> {
+    async getOrderByCustomerId(uId: number): Promise<OrderEntity[]> {
         const order: OrderEntity[] | null = await this.orderRepo.find({
             where: {
                 customer: {
-                    id: cId,
+                    user: {
+                        id: uId
+                    }
                 }
             },
             relations:
@@ -128,7 +130,7 @@ export class OrderService {
 
         })
         if (!order) {
-            throw new NotFoundException(`No orders found for customer ${cId}`);
+            throw new NotFoundException(`No orders found for customer ${uId}`);
         }
         return order;
     }

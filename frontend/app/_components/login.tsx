@@ -1,10 +1,9 @@
 'use client';
 
-import { redirect, useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { AuthService } from "../_services/auth.service";
 
 export default function Login() {
-    const router = useRouter()
     function handleLogin(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -25,12 +24,14 @@ export default function Login() {
         await AuthService.signIn(payload);
         const user = await AuthService.user();
         console.log(user);
+        localStorage.setItem('role', user.role);
+        localStorage.setItem('userId', user.sub.toString());
         if (user.role === 'admin') {
             redirect('/admin/orders/all');
 
         }
         else if (user.role === 'customer') {
-            router.push('/customer/menu');
+            redirect('/customer/menu');
         }
     }
 

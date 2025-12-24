@@ -30,7 +30,7 @@ export default function Modal({ food }: FoodCardProps) {
 
         try {
             const res = await OrderService.placeOrder(orderItems)
-            toast.success("Order placed successfully 🎉");
+            toast.success("Order placed successfully");
         }
         catch(ex){
             toast.error("You need to login");

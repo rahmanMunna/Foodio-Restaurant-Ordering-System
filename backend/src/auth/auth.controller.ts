@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable prettier/prettier */
 
-import { Body, Controller, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, Res, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { LoginDTO } from "./dto/login.dto";
 import { AuthService } from "./auth.service";
 import express from "express";
 import { AuthGuard } from "./guards/auth.guard";
+import { RegisterCustomerDTO } from "./dto/register.dto";
+import { CustomerEntity } from "src/users/entities/customer.entity";
 
 
 @Controller('auth')
@@ -29,9 +31,14 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Post('user')
     async user(@Req() req: express.Request): Promise<any> {
-        const cookie = req.cookies['jwt'];
-        const data = this.authService.user(cookie);
-        return data;
+        try {
+            const cookie = req.cookies['jwt'];
+            const data = this.authService.user(cookie);
+            return data;
+        }
+        catch (ex) {
+            throw new UnauthorizedException(ex);
+        }
     }
 
     @Post('logout')
@@ -43,5 +50,11 @@ export class AuthController {
             path: '/',
         });
         return true;
+    }
+
+    @Post('register')
+    async registerCustomer(@Body() dto: RegisterCustomerDTO): Promise<CustomerEntity> {
+        const customer = await this.authService.registerCustomer(dto);
+        return customer;
     }
 }
