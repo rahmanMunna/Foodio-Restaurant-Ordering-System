@@ -8,9 +8,10 @@ import { FoodService } from "./services/food.service";
 import { FoodController } from "./controllers/food.controller";
 import { CategoryController } from "./controllers/category.controller";
 import { CategoryService } from "./services/category.service";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([FoodEntity, CategoryEntity])],
+    imports: [TypeOrmModule.forFeature([FoodEntity, CategoryEntity]), AuthModule],
     providers: [FoodService, CategoryService],
     controllers: [FoodController, CategoryController]
 })

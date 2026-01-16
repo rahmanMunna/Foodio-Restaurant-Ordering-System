@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import { User } from "../_types/user";
-import { use } from "react";
+import { Customer } from "../_types/customer";
+
 
 export const AuthService = {
     signIn: async (user: User) => {
@@ -15,5 +16,18 @@ export const AuthService = {
         const res = await api.post("/auth/logout");
         return res.data;
     },
+    register: async (registerCustomer: Customer) => {
+        try {
+            const res = await api.post("auth/register", registerCustomer);
+            if (res.status === 201) {
+                return res.data;
+            }
+            return null;
+
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
 };

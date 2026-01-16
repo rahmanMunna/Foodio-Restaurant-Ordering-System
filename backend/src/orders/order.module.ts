@@ -11,9 +11,10 @@ import { CustomerEntity } from "src/users/entities/customer.entity";
 import { FoodEntity } from "src/foods/entities/food.entity";
 import { OrderDetailsService } from "./services/orderDetails.service";
 import { OrderDetailsController } from "./controllers/orderDetails.controller";
+import { AuthModule } from "src/auth/auth.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([OrderEntity, OrderDetailsEntity, OrderStatusEntity, CustomerEntity, FoodEntity])],
+    imports: [AuthModule, TypeOrmModule.forFeature([OrderEntity, OrderDetailsEntity, OrderStatusEntity, CustomerEntity, FoodEntity])],
     providers: [OrderService, OrderDetailsService],
     controllers: [OrderController, OrderDetailsController]
 })

@@ -38,19 +38,21 @@ export class OrderController {
         return this.orderService.readyOrder(oId);
     }
 
-    // @UseGuards(AdminGuard)
+    @UseGuards(AdminGuard)
     @Patch('complete/:oId')
     async CompleteOrder(@Param('oId', ParseIntPipe) oId: number): Promise<boolean> {
         return this.orderService.completeOrder(oId);
     }
 
-    // @UseGuards(CustomerGuard)
+    @UseGuards(CustomerGuard)
     @Get('customer/:uId')
     async getOrderByCustomerId(@Req() req, @Param('uId', ParseIntPipe) uId: number): Promise<OrderEntity[]> {
         try {
-            // const cookie = req.cookies['jwt'];
-            // const cId: number = await this.orderService.user(cookie);
-            return this.orderService.getOrderByCustomerId(uId)
+            const cookie = req.cookies['jwt'];
+            const cId: number = await this.orderService.user(cookie);
+            console.log("Customer ID from token:", cId);    
+            return this.orderService.getOrderByCustomerId(cId)
+            // return this.orderService.getOrderByCustomerId(uId)
         }
         catch (ex) {
             throw new UnauthorizedException(ex)

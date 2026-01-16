@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable prettier/prettier */
 
-import { Body, Controller, Post, Req, Res, UnauthorizedException, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, Req, Res, UnauthorizedException, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { LoginDTO } from "./dto/login.dto";
 import { AuthService } from "./auth.service";
 import express from "express";
@@ -52,6 +52,7 @@ export class AuthController {
         return true;
     }
 
+    @UsePipes(new ValidationPipe)
     @Post('register')
     async registerCustomer(@Body() dto: RegisterCustomerDTO): Promise<CustomerEntity> {
         const customer = await this.authService.registerCustomer(dto);

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { FoodService } from "@/app/_services/food.service";
 import { Category } from "@/app/_types/category";
@@ -14,6 +13,7 @@ export default function FoodCards({ categories }: Props) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(
     categories[0].id
   );
+
   const [foods, setFoods] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,6 @@ export default function FoodCards({ categories }: Props) {
 
   return (
     <>
-
       {/* Categories */}
       <ul className="flex justify-center gap-10 ">
         {categories.map((c) => (
@@ -43,8 +42,7 @@ export default function FoodCards({ categories }: Props) {
               fontWeight: c.id === selectedCategoryId ? "bold" : "normal",
               backgroundColor: c.id === selectedCategoryId ? "#3B82F6" : "transparent",
               color: c.id === selectedCategoryId ? "#ffffff" : "#000000",
-              padding: "0.25rem 0.5rem",
-              
+              padding: "0.25rem 0.5rem",            
             }}
           >
             {c.category}

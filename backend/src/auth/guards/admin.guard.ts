@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable prettier/prettier */
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { AuthService } from "../auth.service";
 
 export interface JwtPayload {
     sub: number;
@@ -15,18 +15,19 @@ export interface JwtPayload {
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-    constructor(private jwtService: JwtService) {}
+    constructor(private authService: AuthService) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request: Request = context.switchToHttp().getRequest();
 
         const token = request.cookies['jwt'];
+        console.log(token)
         if (!token) {
             throw new UnauthorizedException('No JWT token found');
         }
 
         try {
-            const data: JwtPayload = await this.jwtService.verifyAsync(token);
+            const data: JwtPayload = await this.authService.user(token);
 
             if (data.role === 'admin') {
                 return true; // allow access
